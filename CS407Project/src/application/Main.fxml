@@ -10,62 +10,25 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
    <children>
-      <TextArea fx:id="mainText" accessibleRole="DIALOG" editable="false" layoutX="149.0" layoutY="380.0" prefHeight="147.0" prefWidth="414.0" promptText="Type any message in text box to establish connection with the server." wrapText="true">
+      <TextArea fx:id="serverText" accessibleRole="DIALOG" editable="false" layoutX="149.0" layoutY="380.0" prefHeight="147.0" prefWidth="414.0" promptText="Server:" wrapText="true">
          <font>
             <Font size="24.0" />
          </font>
       </TextArea>
       <ToolBar layoutY="526.0" prefHeight="74.0" prefWidth="800.0" style="-fx-background-color: palegreen;">
          <items>
-            <Button alignment="CENTER_RIGHT" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="60.0" prefWidth="60.0" style="-fx-background-radius: 15;">
-               <font>
-                  <Font size="27.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../Downloads/CS4076ProjectClient-master/CS4076ProjectClient-master/src/main/resources/com/example/cs4076projectclient/email.jpg" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-radius: 15;">
-               <font>
-                  <Font size="27.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../Downloads/CS4076ProjectClient-master/CS4076ProjectClient-master/src/main/resources/com/example/cs4076projectclient/bellIcon.jpg" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <Line endX="659.0784912109375" endY="-0.01811319589614868" startX="795.3713989257812" startY="-0.01814216375350952" stroke="#48f886" />
             <TextField fx:id="mainTextField1" prefHeight="60.0" prefWidth="337.0" promptText="Enter text here" style="-fx-background-color: white; -fx-background-radius: 15;" />
             <Button fx:id="stop1" mnemonicParsing="false" prefHeight="60.0" prefWidth="77.0" style="-fx-background-color: #8CA0B1; -fx-background-radius: 15;" text="Stop" />
-            <Line endX="659.0784912109375" endY="-0.01811319589614868" startX="812.3713989257812" startY="0.061566174030303955" stroke="#48f886" />
-            <Button fx:id="settingsButton" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-radius: 15;">
-               <font>
-                  <Font size="27.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../Downloads/CS4076ProjectClient-master/CS4076ProjectClient-master/src/main/resources/com/example/cs4076projectclient/setting.jpg" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <Line endX="659.0784912109375" endY="-0.01811319589614868" startX="875.3713989257812" startY="-0.0180666446685791" stroke="#48f886" />
          </items>
       </ToolBar>
       <MenuBar prefHeight="25.0" prefWidth="800.0" style="-fx-background-color: palegreen;">
@@ -103,8 +66,8 @@
             </VBox>
             <TextField fx:id="enterModuleCode" layoutX="10.0" layoutY="164.0" prefHeight="25.0" prefWidth="128.0" promptText="Enter Module Code" />
             <Button layoutX="20.0" layoutY="336.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Remove Class" />
-            <Button fx:id="addModule" layoutX="23.0" layoutY="206.0" mnemonicParsing="false" onAction="#addModuleButtonAction" prefHeight="25.0" prefWidth="103.0" text="Add Module" />
-            <Button fx:id="removeModule" layoutX="23.0" layoutY="251.0" mnemonicParsing="false" onAction="#removeModuleButtonAction" text="Remove Module" />
+            <Button fx:id="addModule" layoutX="23.0" layoutY="206.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Add Module" />
+            <Button fx:id="removeModule" layoutX="23.0" layoutY="251.0" mnemonicParsing="false" text="Remove Module" />
             <Button layoutX="20.0" layoutY="406.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Display Schedule" />
             <Label layoutX="36.0" layoutY="439.0" text="Select Module" />
             <Label layoutX="43.0" layoutY="6.0" text="Module List" />
