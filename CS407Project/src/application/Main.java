@@ -43,26 +43,26 @@ public class Main extends Application {
 
 	@FXML
 	public Button removeModule;
-	
+
 	@FXML
 	public TextField enterModuleCode1;
-	
+
 	@FXML
 	public Button addClass;
-	
+
 	@FXML
 	public Button removeClass;
-	
+
 	@FXML
 	public Button displaySchedule;
-	
+
 	@FXML
 	public Button enterTextAdd;
 	@FXML
 	public Button enterTextRemove;
 	@FXML
 	public Button stopServer;
-	
+
 	public String moduleCode;
 
 	public static InetAddress host;
@@ -72,152 +72,153 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
 		Scene scene = new Scene(root, 800, 600);
+		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 
-    public void initialize() {
-        addModule.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                try {
-					networkshit("ADD_MODULE", enterModuleCode.getText());
+	public void initialize() {
+		addModule.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent t) {
+				try {
+					sendModuleData("ADD_MODULE", enterModuleCode.getText());
 				} catch (IncorrectActionException e) {
 					System.out.println(e.IncorrectActionMessage());
-					
+
 				}
-            }
-        });
+			}
+		});
 
-        removeModule.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                try {
-					networkshit("REMOVE_MODULE", enterModuleCode.getText());
+		removeModule.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent t) {
+				try {
+					sendModuleData("REMOVE_MODULE", enterModuleCode.getText());
 				} catch (IncorrectActionException e) {
 					System.out.println(e.IncorrectActionMessage());
-					
+
 				}
-            }
-        });
-        addClass.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                serverText.appendText("To add enter class details for " + enterModuleCode1.getText() + "\n"
-                					 +"Example (Monday, 9:00, 11:00, S206)" + "\n");
-            }
-        });
-        
-        enterTextAdd.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-            	moduleCode = enterModuleCode1.getText();
-            	String classData = mainTextField1.getText();
-            	try {
-					networkshit2("ADD_CLASS", moduleCode, classData);
+			}
+		});
+		addClass.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				serverText.appendText("To add enter class details for " + enterModuleCode1.getText() + "\n"
+						+ "Example (Monday, 9:00, 11:00, S206)" + "\n");
+			}
+		});
+
+		enterTextAdd.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				moduleCode = enterModuleCode1.getText();
+				String classData = mainTextField1.getText();
+				try {
+					sendClassData("ADD_CLASS", moduleCode, classData);
 				} catch (IncorrectActionException e) {
 					System.out.println(e.IncorrectActionMessage());
-					
+
 				}
-            }
-        });
-        
-        removeClass.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                serverText.appendText("To remove enter class details for " + enterModuleCode1.getText() + "\n"
-                					 +"Example (Monday, 9:00, 11:00, S206" + "\n");
-            }
-        });
-        
-        enterTextRemove.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-            	moduleCode = enterModuleCode1.getText();
-            	String classData = mainTextField1.getText();
-            	try {
-					networkshit2("REMOVE_CLASS", moduleCode, classData);
+			}
+		});
+
+		removeClass.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				serverText.appendText("To remove enter class details for " + enterModuleCode1.getText() + "\n"
+						+ "Example (Monday, 9:00, 11:00, S206)" + "\n");
+			}
+		});
+
+		enterTextRemove.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				moduleCode = enterModuleCode1.getText();
+				String classData = mainTextField1.getText();
+				try {
+					sendClassData("REMOVE_CLASS", moduleCode, classData);
 				} catch (IncorrectActionException e) {
 					System.out.println(e.IncorrectActionMessage());
-					
+
 				}
-            }
-        });
-        
-        displaySchedule.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-            	moduleCode = enterModuleCode1.getText();
-            	try {
-					networkshit("DISPLAY_SCHEDULE", moduleCode);
+			}
+		});
+
+		displaySchedule.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				moduleCode = enterModuleCode1.getText();
+				try {
+					sendModuleData("DISPLAY_SCHEDULE", moduleCode);
 				} catch (IncorrectActionException e) {
 					System.out.println(e.IncorrectActionMessage());
-					
+
 				}
-            }
-        });
-        
-        stopServer.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-					networkshit("STOP", "");
+			}
+		});
+
+		stopServer.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					sendModuleData("STOP", "");
 				} catch (IncorrectActionException e) {
 					System.out.println(e.IncorrectActionMessage());
-					
-				} 
-            }
-        });
 
-    }
-	
-    private void networkshit(String operation, String moduleCode) throws IncorrectActionException {
-        try {
-            host = InetAddress.getLocalHost();
-            Socket link = new Socket(host, PORT);
-            BufferedReader in = new BufferedReader(new InputStreamReader(link.getInputStream()));
-            PrintWriter out = new PrintWriter(link.getOutputStream(), true);
+				}
+			}
+		});
 
-            out.println(operation + " " + moduleCode);
-            String response = in.readLine();
-            serverText.appendText(response + "\n");
-            if (response.startsWith("Error: ")) {
-                throw new IncorrectActionException(response);
-            }
+	}
 
-            System.out.println("\n* Closing connection... *");
-            link.close();
-        } catch (UnknownHostException e) {
-            System.out.println("Host ID not found!");
-            System.exit(1);
-        } catch (IOException e) {
-            
-        }
-    }
-    
-    private void networkshit2(String operation, String moduleCode, String classData) throws IncorrectActionException {
-        try {
-            host = InetAddress.getLocalHost();
-            Socket link = new Socket(host, PORT);
-            BufferedReader in = new BufferedReader(new InputStreamReader(link.getInputStream()));
-            PrintWriter out = new PrintWriter(link.getOutputStream(), true);
+	private void sendModuleData(String operation, String moduleCode) throws IncorrectActionException {
+		try {
+			host = InetAddress.getLocalHost();
+			Socket link = new Socket(host, PORT);
+			BufferedReader in = new BufferedReader(new InputStreamReader(link.getInputStream()));
+			PrintWriter out = new PrintWriter(link.getOutputStream(), true);
 
-            out.println(operation + " " + moduleCode + " " + classData);
-            String response = in.readLine();
-            serverText.appendText(response + "\n");
-            if (response.startsWith("Error: ")) {
-                throw new IncorrectActionException(response);
-            }
+			out.println(operation + " " + moduleCode);
+			String response = in.readLine();
+			serverText.appendText(response + "\n");
+			if (response.startsWith("Error: ")) {
+				throw new IncorrectActionException(response);
+			}
 
-            System.out.println("\n* Closing connection... *");
-            link.close();
-        } catch (UnknownHostException e) {
-            System.out.println("Host ID not found!");
-            System.exit(1);
-        } catch (IOException e) {
-            
-        }
-    }
+			System.out.println("\n* Closing connection... *");
+			link.close();
+		} catch (UnknownHostException e) {
+			System.out.println("Host ID not found!");
+			System.exit(1);
+		} catch (IOException e) {
+
+		}
+	}
+
+	private void sendClassData(String operation, String moduleCode, String classData) throws IncorrectActionException {
+		try {
+			host = InetAddress.getLocalHost();
+			Socket link = new Socket(host, PORT);
+			BufferedReader in = new BufferedReader(new InputStreamReader(link.getInputStream()));
+			PrintWriter out = new PrintWriter(link.getOutputStream(), true);
+
+			out.println(operation + " " + moduleCode + " " + classData);
+			String response = in.readLine();
+			serverText.appendText(response + "\n");
+			if (response.startsWith("Error: ")) {
+				throw new IncorrectActionException(response);
+			}
+
+			System.out.println("\n* Closing connection... *");
+			link.close();
+		} catch (UnknownHostException e) {
+			System.out.println("Host ID not found!");
+			System.exit(1);
+		} catch (IOException e) {
+
+		}
+	}
 
 	public static void main(String[] args) {
 		launch(args);
